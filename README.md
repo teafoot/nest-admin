@@ -1,3 +1,4 @@
+```plaintext
 Source code for the course: https://www.udemy.com/course/the-complete-angular-nestjs-course/
 The Complete Angular & NestJS Course
 
@@ -93,3 +94,4 @@ Role has permissions
 
 -Nest.js Fixes:
 	-Export the service before using it as a dependency injection (constructor) in another module.
+```
