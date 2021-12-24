@@ -1,73 +1,95 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+Source code for the course: https://www.udemy.com/course/the-complete-angular-nestjs-course/
+The Complete Angular & NestJS Course
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Added the commands used for reference and additional notes/fixes:
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+sudo npm i -g @nestjs/cli
+nest new nest-admin --skip-git
 
-## Description
+----------------------------------
+docker-compose up -d # create docker image and run containers
+docker-compose ps
+-
+docker logs --follow <container_ID> // get nest.js server output
+OR
+docker exec -it <container_ID> bash
+	npm run start:dev // if port in use, override CMD entrypoint in Dockerfile
+-
+docker images
+docker rmi -f <image_ID>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+docker ps -a
+docker-compose stop
+docker container prune # will remove all stopped containers
+docker container rm -f <container_ID>
+-----------------------------------
 
-## Installation
+nest g module user 
+nest g controller user
+nest g service user
 
-```bash
-$ npm install
-```
+nest g module auth
+nest g controller auth
+nest g service auth
+nest g guard auth/auth
 
-## Running the app
+nest g module common // for the jwt service
 
-```bash
-# development
-$ npm run start
+nest g module role
+nest g controller role
+nest g service role
 
-# watch mode
-$ npm run start:dev
+nest g module permission
+nest g controller permission
+nest g service permission
+nest g guard permission
 
-# production mode
-$ npm run start:prod
-```
+nest g service common/abstract
 
-## Test
+nest g module product
+nest g controller product
+nest g service product
 
-```bash
-# unit tests
-$ npm run test
+nest g controller upload
 
-# e2e tests
-$ npm run test:e2e
+nest g module order
+nest g controller order
+nest g service order
 
-# test coverage
-$ npm run test:cov
-```
+-
 
-## Support
+npm install --save @nestjs/typeorm typeorm mysql2
+-
+npm i bcrypt
+npm i -D @types/bcrypt
+-
+npm i class-validator
+npm i class-transformer
+-
+npm i @nestjs/jwt passport-jwt
+npm i @types/passport-jwt
+-
+npm i cookie-parser
+npm i -D @types/cookie-parser
+-
+npm i -D @types/multer
+npm i multer
+-
+npm i json2csv @types/json2csv
+-
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+1. npm run start:dev in docker container => to create the tables
+2. run mysql-data.sql => to populate data including FK data
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+User has role
+Role has permissions
 
-Nest is [MIT licensed](LICENSE).
+//TODO: handle DELETE request... for permission access guards
+	-add access guards to all controller methods (only user, role, order controller has them atm).
+
+-Nest.js Fixes:
+	-Export the service before using it as a dependency injection (constructor) in another module.
