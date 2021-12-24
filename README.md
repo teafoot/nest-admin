@@ -1,7 +1,7 @@
 Source code for the course: https://www.udemy.com/course/the-complete-angular-nestjs-course/
 The Complete Angular & NestJS Course
 
-Added the commands used for reference and additional notes/fixes:
+Added the commands used for reference and my additional notes/fixes:
 
 sudo npm i -g @nestjs/cli
 nest new nest-admin --skip-git
